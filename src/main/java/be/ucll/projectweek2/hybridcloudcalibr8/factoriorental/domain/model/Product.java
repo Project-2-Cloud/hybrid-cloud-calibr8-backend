@@ -24,7 +24,7 @@ public class Product {
     private Float price;
 
     @ManyToMany
-    private Set<Order> orderList;
+    private Set<ProductOrder> productOrderList;
 
     public Product() {
 
@@ -78,11 +78,11 @@ public class Product {
         this.price = price;
     }
 
-    public Set<Order> getOrderList() {
-        return orderList;
+    public Set<ProductOrder> getOrderList() {
+        return productOrderList;
     }
 
-    public void setOrderList(Set<Order> orderList) {
-        this.orderList = orderList;
+    public void setOrderList(Set<ProductOrder> productOrderList) {
+        this.productOrderList = productOrderList;
     }
 }

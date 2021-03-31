@@ -2,7 +2,6 @@ package be.ucll.projectweek2.hybridcloudcalibr8.factoriorental.domain.model;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
-import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
@@ -36,8 +35,8 @@ public class Customer {
     @NotBlank
     private String country;
 
-    @OneToMany
-    private Set<Order> orders;
+    @OneToMany(mappedBy = "customer")
+    private Set<ProductOrder> productOrders;
 
     public Customer() {
 
@@ -113,11 +112,11 @@ public class Customer {
         this.country = country;
     }
 
-    public Set<Order> getOrders() {
-        return orders;
+    public Set<ProductOrder> getOrders() {
+        return productOrders;
     }
 
-    public void setOrders(Set<Order> orders) {
-        this.orders = orders;
+    public void setOrders(Set<ProductOrder> productOrders) {
+        this.productOrders = productOrders;
     }
 }

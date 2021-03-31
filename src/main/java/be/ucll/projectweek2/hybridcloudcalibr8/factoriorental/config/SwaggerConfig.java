@@ -5,8 +5,11 @@ import org.springframework.context.annotation.Configuration;
 
 
 import org.springframework.context.annotation.Import;
+import org.springframework.web.bind.annotation.GetMapping;
 import springfox.bean.validators.configuration.BeanValidatorPluginsConfiguration;
 import springfox.documentation.builders.ApiInfoBuilder;
+import springfox.documentation.builders.PathSelectors;
+import springfox.documentation.builders.RequestHandlerSelectors;
 import springfox.documentation.service.ApiInfo;
 import springfox.documentation.spi.DocumentationType;
 import springfox.documentation.spring.web.plugins.Docket;
@@ -21,11 +24,24 @@ import static springfox.documentation.builders.PathSelectors.any;
 public class SwaggerConfig {
 
     @Bean
-    public Docket postsApi() {
-        return new Docket(DocumentationType.SWAGGER_2).groupName("all")
-                .apiInfo(apiInfo()).select().paths(any()).build();
+    public Docket allApi() {
+        return new Docket(DocumentationType.SWAGGER_2).groupName("All")
+                .apiInfo(apiInfo())
+                .select()
+                .apis(RequestHandlerSelectors.any())
+                .paths(PathSelectors.ant("/api/**"))
+                .build();
     }
 
+    @Bean
+    public Docket publicApi() {
+        return new Docket(DocumentationType.SWAGGER_2)
+                .groupName("Public")
+                .select()
+                .apis(RequestHandlerSelectors.withMethodAnnotation(GetMapping.class))
+                .paths(PathSelectors.ant("/api/products/**"))
+                .build();
+    }
 
     private ApiInfo apiInfo() {
         return new ApiInfoBuilder().title("Factorio Rental Service API")
