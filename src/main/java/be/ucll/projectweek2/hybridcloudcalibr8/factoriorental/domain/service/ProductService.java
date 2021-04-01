@@ -6,6 +6,7 @@ import org.hibernate.service.spi.ServiceException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.persistence.EntityNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,7 +21,7 @@ public class ProductService {
     }
 
     public Product findOne(long id){
-        return productRepository.findById(id).orElseThrow(()-> {throw new ServiceException("Product doesn't exist");});
+        return productRepository.findById(id).orElseThrow(()-> {throw new EntityNotFoundException("Product doesn't exist");});
     }
 
     public Product add(Product product){
@@ -32,7 +33,7 @@ public class ProductService {
 
     public Product update(Product product){
         if (product.getId() == null || !productRepository.findById(product.getId()).isPresent()){
-            throw new ServiceException("Product does not exist");
+            throw new EntityNotFoundException("Product does not exist");
         }
         return productRepository.save(product);
     }

@@ -10,6 +10,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/customers")
+@CrossOrigin( origins = "http://localhost:8080", allowCredentials = "true")
 public class CustomerController {
 
     @Autowired

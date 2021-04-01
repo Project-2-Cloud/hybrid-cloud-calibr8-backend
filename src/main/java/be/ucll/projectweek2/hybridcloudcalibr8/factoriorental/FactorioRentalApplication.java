@@ -12,15 +12,4 @@ public class FactorioRentalApplication {
     public static void main(String[] args) {
         SpringApplication.run(FactorioRentalApplication.class, args);
     }
-
-    @Configuration
-    public class WebConfig implements WebMvcConfigurer {
-
-        @Override
-        public void addCorsMappings(CorsRegistry registry) {
-            registry.addMapping("/**").allowedOrigins("*").allowedMethods("*");
-        }
-
-    }
-
 }

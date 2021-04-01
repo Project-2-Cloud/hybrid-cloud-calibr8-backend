@@ -1,14 +1,21 @@
 package be.ucll.projectweek2.hybridcloudcalibr8.factoriorental.controller;
 
 import be.ucll.projectweek2.hybridcloudcalibr8.factoriorental.domain.model.Product;
+import be.ucll.projectweek2.hybridcloudcalibr8.factoriorental.domain.model.Role;
 import be.ucll.projectweek2.hybridcloudcalibr8.factoriorental.domain.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.client.HttpClientErrorException;
+import org.springframework.web.server.ResponseStatusException;
 
+import javax.security.sasl.AuthenticationException;
 import javax.validation.Valid;
+import java.util.Arrays;
 import java.util.List;
+
 
 @RestController
 @RequestMapping("/api/products")
@@ -29,35 +36,32 @@ public class ProductController {
     }
 
     @PostMapping("")
-    public String add(@Valid @RequestBody Product product, @AuthenticationPrincipal Jwt accessToken){
-        String scope = accessToken.getClaims().get("scope").toString();
-        boolean partnerRole = scope.contains("partner");
-        if (!partnerRole) return "Not authorized to add product";
-        System.out.println("Contains sequence 'partner': " + accessToken.getClaims().get("scope").toString());
-        System.out.println("Contains sequence 'partner': " + accessToken.getClaims().get("scope").toString().contains("partner"));
-        productService.add(product);
-        return "Product added";
+    public Product add(@Valid @RequestBody Product product, @AuthenticationPrincipal Jwt accessToken) throws AuthenticationException {
+        checkAuthentication(accessToken, new Role[]{Role.ADMIN, Role.DEV});
+        return  productService.add(product);
     }
 
     @PutMapping("")
-    public String update(@Valid @RequestBody Product product, @AuthenticationPrincipal Jwt accessToken){
-        String scope = accessToken.getClaims().get("scope").toString();
-        boolean partnerRole = scope.contains("partner");
-        if (!partnerRole) return "Not authorized to update product";
-        System.out.println("Contains sequence 'partner': " + accessToken.getClaims().get("scope").toString());
-        System.out.println("Contains sequence 'partner': " + accessToken.getClaims().get("scope").toString().contains("partner"));
-        productService.update(product);
-        return "Product updated";
+    public Product update(@Valid @RequestBody Product product, @AuthenticationPrincipal Jwt accessToken) throws AuthenticationException {
+        checkAuthentication(accessToken, new Role[]{Role.ADMIN, Role.DEV});
+        return productService.update(product);
     }
 
     @DeleteMapping("")
-    public String delete(@Valid @RequestBody Product product, @AuthenticationPrincipal Jwt accessToken){
-        String scope = accessToken.getClaims().get("scope").toString();
-        boolean partnerRole = scope.contains("partner");
-        if (!partnerRole) return "Not authorized to delete product";
-        System.out.println("Contains sequence 'partner': " + accessToken.getClaims().get("scope").toString());
-        System.out.println("Contains sequence 'partner': " + accessToken.getClaims().get("scope").toString().contains("partner"));
+    public void delete(@Valid @RequestBody Product product, @AuthenticationPrincipal Jwt accessToken) throws AuthenticationException {
+        checkAuthentication(accessToken, new Role[]{Role.ADMIN, Role.DEV});
         productService.delete(product);
-        return "Product deleted";
+    }
+
+    private void checkAuthentication(Jwt accessToken, Role[] role) throws AuthenticationException {
+        String scope = accessToken.getClaims().get("scope").toString();
+        boolean roleIsPresent = false;
+        for (Role r: role) {
+            if (scope.contains(r.getValue())){
+                roleIsPresent = true;
+                break;
+            }
+        }
+        if (!roleIsPresent)  throw new AuthenticationException();
     }
 }

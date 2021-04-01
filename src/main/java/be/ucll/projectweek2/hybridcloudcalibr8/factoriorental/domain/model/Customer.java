@@ -38,11 +38,14 @@ public class Customer {
     @OneToMany(mappedBy = "customer")
     private Set<ProductOrder> productOrders;
 
+    @NotNull
+    private Role role;
+
     public Customer() {
 
     }
 
-    public Customer(String email, String firstName, String lastName, Integer houseNumber, String streetName, String city, String country) {
+    public Customer(String email, String firstName, String lastName, Integer houseNumber, String streetName, String city, String country, Role role) {
         this.email = email;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -50,6 +53,7 @@ public class Customer {
         this.streetName = streetName;
         this.city = city;
         this.country = country;
+        this.role = role;
     }
 
     public String getId() {

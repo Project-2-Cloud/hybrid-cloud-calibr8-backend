@@ -2,8 +2,10 @@ package be.ucll.projectweek2.hybridcloudcalibr8.factoriorental.domain.model;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.PastOrPresent;
 import javax.validation.constraints.Positive;
 import javax.validation.constraints.PositiveOrZero;
+import java.util.Date;
 import java.util.List;
 import java.util.Set;
 
@@ -24,6 +26,12 @@ public class ProductOrder {
     @NotNull
     @ManyToOne
     private Customer customer;
+
+    @NotNull
+    private OrderState state;
+
+    @PastOrPresent
+    private Date date;
 
     public long getId() {
         return id;
@@ -55,5 +63,13 @@ public class ProductOrder {
 
     public void setCustomer(Customer customer) {
         this.customer = customer;
+    }
+
+    public Date getDate() {
+        return date;
+    }
+
+    public void setDate(Date date) {
+        this.date = date;
     }
 }

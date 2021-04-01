@@ -2,6 +2,7 @@ package be.ucll.projectweek2.hybridcloudcalibr8.factoriorental.config;
 
 import java.util.Arrays;
 
+import be.ucll.projectweek2.hybridcloudcalibr8.factoriorental.domain.model.Role;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.core.Ordered;
@@ -23,7 +24,7 @@ import org.springframework.boot.web.servlet.FilterRegistrationBean;
 @EnableWebSecurity
 public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
 
-    @Value("partner")
+    @Value("user")
     private String scope;
 
     @Value("${spring.security.oauth2.resourceserver.jwt.issuer-uri}")
