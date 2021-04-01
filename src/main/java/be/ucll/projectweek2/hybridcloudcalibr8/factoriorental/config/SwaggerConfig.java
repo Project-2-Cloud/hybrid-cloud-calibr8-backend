@@ -25,7 +25,8 @@ public class SwaggerConfig {
 
     @Bean
     public Docket allApi() {
-        return new Docket(DocumentationType.SWAGGER_2).groupName("All")
+        return new Docket(DocumentationType.SWAGGER_2)
+                .groupName("All")
                 .apiInfo(apiInfo())
                 .select()
                 .apis(RequestHandlerSelectors.any())
@@ -37,6 +38,7 @@ public class SwaggerConfig {
     public Docket publicApi() {
         return new Docket(DocumentationType.SWAGGER_2)
                 .groupName("Public")
+                .apiInfo(apiInfo())
                 .select()
                 .apis(RequestHandlerSelectors.withMethodAnnotation(GetMapping.class))
                 .paths(PathSelectors.ant("/api/products/**"))
