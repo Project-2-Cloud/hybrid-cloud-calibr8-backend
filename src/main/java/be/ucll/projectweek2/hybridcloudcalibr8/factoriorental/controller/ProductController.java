@@ -12,7 +12,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/products")
-@CrossOrigin( origins = "http://calibr-8-shopping-cart-ucllteam08.ocp-ucll-40cb0df2b03969eabb3fac6e80373775-0000.eu-de.containers.appdomain.cloud/", allowCredentials = "true")
+@CrossOrigin( origins = "http://calibr-8-shopping-cart-ucllteam08.ocp-ucll-40cb0df2b03969eabb3fac6e80373775-0000.eu-de.containers.appdomain.cloud", allowCredentials = "true")
 public class ProductController {
 
     @Autowired
