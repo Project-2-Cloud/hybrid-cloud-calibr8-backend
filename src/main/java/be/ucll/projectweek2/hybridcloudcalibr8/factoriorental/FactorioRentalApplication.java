@@ -13,7 +13,7 @@ public class FactorioRentalApplication {
         SpringApplication.run(FactorioRentalApplication.class, args);
     }
 
-    @Configuration
+    /*@Configuration
     public class WebConfig implements WebMvcConfigurer {
 
         @Override
@@ -21,6 +21,6 @@ public class FactorioRentalApplication {
             registry.addMapping("/**").allowedOrigins("*").allowedMethods("*");
         }
 
-    }
+    }*/
 
 }
