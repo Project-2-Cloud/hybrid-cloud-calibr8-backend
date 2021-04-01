@@ -30,4 +30,14 @@ public class OrderController {
     public ProductOrder add(@Valid @RequestBody ProductOrder order){
         return orderService.add(order);
     }
+
+    @PutMapping("")
+    public ProductOrder update(@Valid @RequestBody ProductOrder order){
+        return orderService.update(order);
+    }
+
+    @DeleteMapping
+    public void delete(@Valid @RequestBody ProductOrder order){
+        orderService.delete(order);
+    }
 }
